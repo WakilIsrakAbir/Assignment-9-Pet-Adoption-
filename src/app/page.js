@@ -156,6 +156,80 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Success Stories Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Happy Tails: Success Stories</h2>
+          <p className="text-gray-600 mb-12 max-w-2xl mx-auto">See how adoption has transformed the lives of pets and their new families.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((story) => (
+              <div key={story} className="bg-orange-50 p-6 rounded-2xl shadow-sm border border-orange-100 text-left">
+                <p className="italic text-gray-700 mb-4">"Adopting Bella was the best decision our family ever made. She brings so much joy and laughter into our home every single day!"</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-orange-200"></div>
+                  <div>
+                    <h4 className="font-bold text-gray-900">The Smith Family</h4>
+                    <p className="text-sm text-gray-500">Adopted Bella (Dog)</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pet Care Tips Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">Essential Pet Care Tips</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {['Nutrition', 'Exercise', 'Grooming', 'Vet Visits'].map((tip, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:-translate-y-1 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center font-bold text-xl mb-4">{idx + 1}</div>
+                <h4 className="text-xl font-bold text-gray-900 mb-2">{tip}</h4>
+                <p className="text-gray-600 text-sm">Ensure your pet stays healthy and happy with proper {tip.toLowerCase()} routines tailored to their specific needs and age.</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section (Custom 1) */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12">How Adoption Works</h2>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+            <div className="flex flex-col items-center max-w-xs">
+              <div className="w-16 h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">1</div>
+              <h4 className="font-bold text-xl text-gray-900 mb-2">Find Your Match</h4>
+              <p className="text-gray-600">Browse our extensive list of available pets and find the one that steals your heart.</p>
+            </div>
+            <div className="hidden md:block w-16 h-1 bg-orange-200 rounded"></div>
+            <div className="flex flex-col items-center max-w-xs">
+              <div className="w-16 h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">2</div>
+              <h4 className="font-bold text-xl text-gray-900 mb-2">Send Request</h4>
+              <p className="text-gray-600">Submit an adoption request with your details to show your interest in the pet.</p>
+            </div>
+            <div className="hidden md:block w-16 h-1 bg-orange-200 rounded"></div>
+            <div className="flex flex-col items-center max-w-xs">
+              <div className="w-16 h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">3</div>
+              <h4 className="font-bold text-xl text-gray-900 mb-2">Bring Them Home</h4>
+              <p className="text-gray-600">Once approved, arrange a pickup date and welcome your new family member!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Volunteer Section (Custom 2) */}
+      <section className="py-20 bg-orange-500 text-white text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Want to Help But Can't Adopt?</h2>
+          <p className="text-lg md:text-xl text-orange-50 mb-8">Join our volunteer program and make a direct impact on the lives of rescue animals. We are always looking for passionate animal lovers to help out at our shelters.</p>
+          <button className="bg-white text-orange-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-lg transition-colors text-lg">
+            Become a Volunteer
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
