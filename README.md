@@ -1,29 +1,28 @@
-# PetAdopt Platform
+# PetAdopt - Pet Adoption Platform
 
-## Purpose
-A full-stack Pet Adoption Platform allowing users to explore pets available for adoption, view detailed pet profiles, and submit adoption requests. Pet owners can list their pets and manage adoption requests securely.
+## 📌 Project Purpose
+PetAdopt is a full-stack web application designed to connect loving individuals with adorable pets in need of a forever home. Users can browse available pets, filter them by species, view detailed information, and submit adoption requests. Pet owners can list their pets for adoption, manage incoming requests, and update or delete their listings.
 
-## Live URL
-*(Live URL goes here - e.g., Vercel / Render deployment link)*
+## 🔗 Live URL
+*(Add your Vercel/Netlify live URL here after deployment)*
+`https://your-live-url.vercel.app`
 
-## Features
-- **User Authentication:** Secure JWT-based authentication using HTTPOnly cookies.
-- **Pet Browsing & Search:** Search pets by name and filter them by species using an interactive UI.
-- **Adoption Request Management:** Users can request to adopt pets (excluding their own), and owners can approve or reject these requests seamlessly.
-- **Adoption Control:** When a request is approved, the pet is automatically marked as 'adopted' and all other pending requests for that pet are rejected.
-- **Private Dashboard:** A secure dashboard area where users can manage their own listings, track their adoption requests, and view the status of their requests.
+## ✨ Key Features
+1. **User Authentication & Authorization**: Secure login and registration using Better-Auth. Users must be logged in to adopt pets or manage their dashboard.
+2. **Dynamic Search & Filtering**: Advanced real-time search functionality on the "All Pets" page, filtering by pet name (`$regex`) and species (`$in`).
+3. **Comprehensive Dashboard Management**: Users can add new pet listings, view all their listings, edit pet details, and delete listings with confirmation modals.
+4. **Adoption Request Workflow**: Users can request to adopt a pet (unless they are the owner). Pet owners can view requests for their listings and approve or reject them. Approving a request marks the pet as "Adopted" and rejects other pending requests.
+5. **Modern UI & Aesthetics**: Built with Next.js, Tailwind CSS v4, HeroUI components, and Framer Motion for smooth, dynamic, and responsive user experiences, complete with Light/Dark mode toggling.
 
-## NPM Packages Used
-- `next` (Next.js framework)
-- `react` / `react-dom`
-- `tailwindcss` (Styling)
-- `framer-motion` (Micro-animations and transitions)
-- `axios` (API requests with credentials)
-- `react-hot-toast` (UI notifications)
-- `react-icons` (Scalable vector icons)
-
-## Setup Locally
-1. Clone the repository.
-2. Run `npm install` to install dependencies.
-3. Configure the `.env` if necessary (though the proxy `next.config.mjs` handles backend routing to `http://localhost:5000/api`).
-4. Run `npm run dev` to start the frontend server.
+## 📦 NPM Packages Used
+- **next**: Modern React framework for SSR and App Router.
+- **react / react-dom**: UI component building.
+- **tailwindcss / @tailwindcss/postcss**: Styling and layout.
+- **@heroui/react**: Beautiful, accessible UI components.
+- **better-auth**: Comprehensive authentication solution.
+- **axios**: Promise-based HTTP client for API requests.
+- **mongoose**: MongoDB object modeling tool.
+- **framer-motion**: Animation library for React.
+- **react-hot-toast**: Beautiful notifications for React.
+- **react-icons**: SVG icon library.
+- **next-themes**: Dark/Light mode theme toggling.
