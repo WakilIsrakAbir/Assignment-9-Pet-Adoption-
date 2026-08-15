@@ -137,15 +137,17 @@ export default function MyListings() {
                   <td className="p-4 text-right space-x-2">
                     <button 
                       onClick={() => openRequestsModal(pet._id)}
-                      className="bg-orange-100 text-orange-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-orange-200 transition"
+                      className="bg-orange-100 text-orange-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-orange-200 transition cursor-pointer"
                     >
                       Requests
                     </button>
-                    {/* Add edit button logic later if needed, right now we just do basic UI */}
+                    <Link href={`/dashboard/update-pet/${pet._id}`} className="bg-green-100 text-green-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-green-200 transition">
+                      Edit
+                    </Link>
                     <Link href={`/pets/${pet._id}`} className="inline-block bg-blue-100 text-blue-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-blue-200 transition">View</Link>
                     <button 
                       onClick={() => handleDelete(pet._id)}
-                      className="bg-red-100 text-red-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-red-200 transition"
+                      className="bg-red-100 text-red-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-red-200 transition cursor-pointer"
                     >
                       Delete
                     </button>
@@ -163,7 +165,7 @@ export default function MyListings() {
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden max-h-[80vh] flex flex-col">
             <div className="bg-gray-50 border-b border-gray-100 px-6 py-4 flex justify-between items-center">
               <h3 className="text-xl font-bold text-gray-900">Adoption Requests</h3>
-              <button onClick={() => setRequestsModal({ ...requestsModal, open: false })} className="text-gray-400 hover:text-gray-700">
+              <button onClick={() => setRequestsModal({ ...requestsModal, open: false })} className="text-gray-400 hover:text-gray-700 cursor-pointer">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
@@ -195,13 +197,13 @@ export default function MyListings() {
                           <div className="flex gap-2 mt-2">
                             <button 
                               onClick={() => handleRequestStatus(req._id, 'approved')}
-                              className="bg-green-500 text-white px-3 py-1 rounded text-sm font-bold hover:bg-green-600 transition"
+                              className="bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-bold hover:bg-green-200 transition cursor-pointer"
                             >
                               Approve
                             </button>
                             <button 
                               onClick={() => handleRequestStatus(req._id, 'rejected')}
-                              className="bg-red-500 text-white px-3 py-1 rounded text-sm font-bold hover:bg-red-600 transition"
+                              className="bg-red-100 text-red-700 px-3 py-1 rounded text-xs font-bold hover:bg-red-200 transition cursor-pointer"
                             >
                               Reject
                             </button>

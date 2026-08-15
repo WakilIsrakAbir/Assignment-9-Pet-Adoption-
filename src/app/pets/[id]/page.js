@@ -151,7 +151,7 @@ export default function PetDetails() {
           >
             <div className="bg-orange-500 px-6 py-4 flex justify-between items-center text-white">
               <h3 className="text-xl font-bold">Adoption Request</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-white/80 hover:text-white">
+              <button onClick={() => setIsModalOpen(false)} className="text-white/80 hover:text-white cursor-pointer">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
@@ -177,7 +177,7 @@ export default function PetDetails() {
                   min={new Date().toISOString().split('T')[0]}
                   value={pickupDate}
                   onChange={(e) => setPickupDate(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none" 
+                  className="w-full bg-white text-gray-900 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none cursor-pointer" 
                 />
               </div>
               <div>
@@ -186,16 +186,16 @@ export default function PetDetails() {
                   rows="3" 
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full bg-white text-gray-900 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none"
                   placeholder="Why would you be a great owner for this pet?"
                 ></textarea>
               </div>
               
               <div className="pt-4 flex gap-3">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 transition">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 transition cursor-pointer">
                   Cancel
                 </button>
-                <button type="submit" className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition shadow-md">
+                <button type="submit" className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition shadow-md cursor-pointer">
                   Submit Request
                 </button>
               </div>
