@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-
+import { useRouter, useParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
-export default function AddPet() {
+export default function UpdatePet() {
+  const { id } = useParams();
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const router = useRouter();
+  
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [formData, setFormData] = useState({
     petName: "",
     species: "Dog",
@@ -26,6 +28,36 @@ export default function AddPet() {
     description: "",
   });
 
+  useEffect(() => {
+    if (!id) return;
+    const fetchPet = async () => {
+      try {
+        const res = await axios.get(`/api/pets/${id}`);
+        const pet = res.data;
+        
+        setFormData({
+          petName: pet.petName,
+          species: pet.species,
+          breed: pet.breed,
+          age: pet.age,
+          gender: pet.gender,
+          imageUrl: pet.imageUrl,
+          healthStatus: pet.healthStatus,
+          vaccinationStatus: pet.vaccinationStatus,
+          location: pet.location,
+          adoptionFee: pet.adoptionFee,
+          description: pet.description,
+        });
+      } catch (error) {
+        toast.error("Failed to load pet details");
+        router.push("/dashboard/my-listings");
+      } finally {
+        setFetching(false);
+      }
+    };
+    fetchPet();
+  }, [id, router]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -34,23 +66,29 @@ export default function AddPet() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("/api/pets", {
+      await axios.put(`/api/pets/${id}`, {
         ...formData,
         age: Number(formData.age),
         adoptionFee: Number(formData.adoptionFee),
       });
-      toast.success("Pet added successfully!");
+      toast.success("Pet updated successfully!");
       router.push("/dashboard/my-listings");
     } catch (error) {
-      toast.error("Failed to add pet");
+      toast.error(error.response?.data?.message || "Failed to update pet");
     } finally {
       setLoading(false);
     }
   };
 
+  if (fetching) return (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-orange-500"></div>
+    </div>
+  );
+
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Add a New Pet</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Update Pet Listing</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div>
@@ -121,7 +159,7 @@ export default function AddPet() {
           </div>
         </div>
         <button type="submit" disabled={loading} className="w-full mt-2 bg-orange-500 text-white font-bold py-2.5 px-4 rounded-lg shadow hover:bg-orange-600 transition disabled:bg-orange-300 cursor-pointer">
-          {loading ? "Adding Pet..." : "Add Pet Listing"}
+          {loading ? "Updating..." : "Update Pet"}
         </button>
       </form>
     </div>
