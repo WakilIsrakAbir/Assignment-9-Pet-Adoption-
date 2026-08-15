@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PetAdopt Platform
 
-## Getting Started
+## Purpose
+A full-stack Pet Adoption Platform allowing users to explore pets available for adoption, view detailed pet profiles, and submit adoption requests. Pet owners can list their pets and manage adoption requests securely.
 
-First, run the development server:
+## Live URL
+*(Live URL goes here - e.g., Vercel / Render deployment link)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
+- **User Authentication:** Secure JWT-based authentication using HTTPOnly cookies.
+- **Pet Browsing & Search:** Search pets by name and filter them by species using an interactive UI.
+- **Adoption Request Management:** Users can request to adopt pets (excluding their own), and owners can approve or reject these requests seamlessly.
+- **Adoption Control:** When a request is approved, the pet is automatically marked as 'adopted' and all other pending requests for that pet are rejected.
+- **Private Dashboard:** A secure dashboard area where users can manage their own listings, track their adoption requests, and view the status of their requests.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## NPM Packages Used
+- `next` (Next.js framework)
+- `react` / `react-dom`
+- `tailwindcss` (Styling)
+- `framer-motion` (Micro-animations and transitions)
+- `axios` (API requests with credentials)
+- `react-hot-toast` (UI notifications)
+- `react-icons` (Scalable vector icons)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Setup Locally
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Configure the `.env` if necessary (though the proxy `next.config.mjs` handles backend routing to `http://localhost:5000/api`).
+4. Run `npm run dev` to start the frontend server.

@@ -1,69 +1,161 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
+  const [featuredPets, setFeaturedPets] = useState([]);
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const res = await axios.get("/api/pets");
+        setFeaturedPets(res.data.slice(0, 6));
+      } catch (error) {
+        console.error("Failed to fetch pets", error);
+      }
+    };
+    fetchPets();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-orange-50 to-orange-100 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
+          <div className="md:w-1/2 z-10">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Find Your Perfect <span className="text-orange-500">Furry Friend</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-lg text-gray-700 mb-8 max-w-lg"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+              Give a pet a second chance at happiness. Adopt a rescue animal today and bring unconditional love into your home.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Link href="/pets" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-block">
+                Adopt Now
+              </Link>
+            </motion.div>
+          </div>
+          <div className="md:w-1/2 mt-10 md:mt-0 z-10 relative">
+            <motion.img 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              alt="Happy dog" 
+              className="rounded-2xl shadow-2xl"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Featured Pets Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Pets</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Meet some of our adorable animals waiting for their forever homes. Every adoption makes a difference.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredPets.map((pet) => (
+              <motion.div 
+                key={pet._id}
+                whileHover={{ y: -5 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col hover:shadow-xl transition-shadow"
+              >
+                <div className="h-56 overflow-hidden relative">
+                  <img src={pet.imageUrl} alt={pet.petName} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-orange-600 text-xs font-bold px-3 py-1 rounded-full shadow">
+                    {pet.species}
+                  </div>
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-xl font-bold text-gray-900">{pet.petName}</h3>
+                    <span className="text-orange-500 font-bold">${pet.adoptionFee}</span>
+                  </div>
+                  <div className="text-sm text-gray-600 mb-6 flex-grow space-y-1">
+                    <p className="flex items-center gap-2"><span className="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-[10px]">🐾</span> {pet.breed}</p>
+                    <p className="flex items-center gap-2"><span className="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-[10px]">📅</span> {pet.age} years old</p>
+                    <p className="flex items-center gap-2"><span className="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-[10px]">📍</span> {pet.location}</p>
+                  </div>
+                  <Link href={`/pets/${pet._id}`} className="block w-full text-center bg-orange-50 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-300">
+                    View Details
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+            
+            {featuredPets.length === 0 && (
+              <div className="col-span-1 sm:col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse bg-gray-100 rounded-xl h-96 w-full"></div>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link href="/pets" className="inline-block bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-bold py-3 px-8 rounded-full transition-colors shadow-sm">
+              View All Pets
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Adopt Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row gap-16 items-center">
+            <div className="md:w-1/2 relative">
+              <div className="absolute inset-0 bg-orange-200 transform translate-x-4 translate-y-4 rounded-2xl -z-10"></div>
+              <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pet care" className="rounded-2xl shadow-lg w-full object-cover h-[400px]" />
+            </div>
+            <div className="md:w-1/2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Why Adopt a Pet?</h2>
+              <ul className="space-y-6">
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mt-1 font-bold text-lg">✓</div>
+                  <div className="ml-4">
+                    <h4 className="text-xl font-bold text-gray-900">Save a life</h4>
+                    <p className="text-gray-600 mt-1">Every year, millions of adoptable dogs and cats are euthanized. You can save a life by adopting.</p>
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mt-1 font-bold text-lg">✓</div>
+                  <div className="ml-4">
+                    <h4 className="text-xl font-bold text-gray-900">Unconditional love</h4>
+                    <p className="text-gray-600 mt-1">Pets provide endless affection and companionship, improving your mental and physical health.</p>
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mt-1 font-bold text-lg">✓</div>
+                  <div className="ml-4">
+                    <h4 className="text-xl font-bold text-gray-900">Stop cruel breeding</h4>
+                    <p className="text-gray-600 mt-1">Adopting helps fight puppy mills and unethical breeding facilities by reducing demand.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
