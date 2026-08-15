@@ -5,12 +5,13 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { MdPets } from "react-icons/md";
-import { Card, CardHeader, CardContent, CardFooter, Input, Button } from "@heroui/react";
+import { MdPets, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { Card, CardHeader, CardContent, CardFooter } from "@heroui/react";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -58,40 +59,46 @@ export default function Login() {
         
         <CardContent>
           <form className="flex flex-col gap-4" onSubmit={handleLogin}>
-            <Input
-              isRequired
-              label="Email"
-              type="email"
-              name="email"
-              variant="bordered"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <Input
-              isRequired
-              label="Password"
-              type="password"
-              name="password"
-              variant="bordered"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            
-            <div className="flex justify-end">
-              <Link href="#" className="text-sm font-medium text-orange-500 hover:text-orange-400">
-                Forgot your password?
-              </Link>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
+              <input
+                required
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+              />
             </div>
             
-            <Button
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-gray-700">Password <span className="text-red-500">*</span></label>
+              <div className="relative">
+                <input
+                  required
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 pr-10 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-orange-500"
+                >
+                  {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
+                </button>
+              </div>
+            </div>
+            
+            <button
               type="submit"
-              color="warning"
-              variant="shadow"
-              isLoading={loading}
-              className="mt-2 text-white font-bold"
+              disabled={loading}
+              className="mt-2 w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:bg-orange-300 transition-colors"
             >
-              Sign In
-            </Button>
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
           </form>
         </CardContent>
         
