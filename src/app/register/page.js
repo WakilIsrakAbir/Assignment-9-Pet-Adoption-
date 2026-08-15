@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { MdPets } from "react-icons/md";
-import { Card, CardHeader, CardBody, CardFooter, Input, Button } from "@heroui/react";
+import { Card, CardHeader, CardContent, CardFooter, Input, Button } from "@heroui/react";
 
 export default function Register() {
   const [formData, setFormData] = useState({ name: "", email: "", photoUrl: "", password: "" });
@@ -65,7 +65,7 @@ export default function Register() {
           </p>
         </CardHeader>
 
-        <CardBody>
+        <CardContent>
           <form className="flex flex-col gap-4" onSubmit={handleRegister}>
             <Input
               isRequired
@@ -114,7 +114,7 @@ export default function Register() {
               Register
             </Button>
           </form>
-        </CardBody>
+        </CardContent>
         
         <CardFooter className="justify-center">
           <p className="text-sm text-gray-600">
