@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { authClient } from "@/lib/auth-client";
 
 export default function MyListings() {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [requestsModal, setRequestsModal] = useState({ open: false, petId: null, requests: [] });
-  const { user } = useAuth();
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const fetchMyPets = async () => {
     try {

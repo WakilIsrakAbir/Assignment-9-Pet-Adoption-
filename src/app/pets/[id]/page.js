@@ -1,21 +1,22 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "@/context/AuthContext";
+import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { authClient } from "@/lib/auth-client";
 
-export default function PetDetails({ params }) {
-  const unwrappedParams = use(params);
-  const { id } = unwrappedParams;
+export default function PetDetails() {
+  const params = useParams();
+  const { id } = params;
   const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const { user } = useAuth();
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
   const router = useRouter();
 
   // Form State
@@ -23,6 +24,7 @@ export default function PetDetails({ params }) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    if (!id) return;
     const fetchPet = async () => {
       try {
         const res = await axios.get(`/api/pets/${id}`);

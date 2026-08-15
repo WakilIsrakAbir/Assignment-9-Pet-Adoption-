@@ -1,23 +1,25 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
+import { authClient } from "@/lib/auth-client";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { MdList, MdAddCircle, MdPets } from "react-icons/md";
+import { Avatar } from "@heroui/react";
 
 export default function DashboardLayout({ children }) {
-  const { user, loading } = useAuth();
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!isPending && !user) {
       router.push("/login");
     }
-  }, [user, loading, router]);
+  }, [user, isPending, router]);
 
-  if (loading || !user) {
+  if (isPending || !user) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
         <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-orange-500"></div>
@@ -36,7 +38,7 @@ export default function DashboardLayout({ children }) {
       <aside className="w-full md:w-64 shrink-0">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:sticky top-24">
           <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
-            <img src={user.photoUrl || "https://via.placeholder.com/50"} alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-orange-500" />
+            <Avatar src={user.image || "https://via.placeholder.com/50"} name={user.name} size="lg" color="warning" isBordered />
             <div>
               <p className="font-bold text-gray-900">{user.name}</p>
               <p className="text-xs text-gray-500 truncate w-32">{user.email}</p>

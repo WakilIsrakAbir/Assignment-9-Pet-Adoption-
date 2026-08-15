@@ -1,31 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { MdPets } from "react-icons/md";
+import { Card, CardHeader, CardBody, CardFooter, Input, Button } from "@heroui/react";
 
 export default function Register() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    photoUrl: "",
-    password: "",
-    confirmPassword: ""
-  });
-  
-  const { register } = useAuth();
+  const [formData, setFormData] = useState({ name: "", email: "", photoUrl: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  const validatePassword = (password) => {
-    if (password.length < 6) return "Password must be at least 6 characters";
-    if (!/[A-Z]/.test(password)) return "Password must contain at least one uppercase letter";
-    if (!/[a-z]/.test(password)) return "Password must contain at least one lowercase letter";
-    return null;
-  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,114 +20,111 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     
-    if (formData.password !== formData.confirmPassword) {
-      return toast.error("Passwords do not match");
+    // Password Validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      toast.error("Password must have at least 6 characters, an uppercase and a lowercase letter.");
+      return;
     }
 
-    const passwordError = validatePassword(formData.password);
-    if (passwordError) {
-      return toast.error(passwordError);
-    }
-
+    setLoading(true);
     try {
-      await register({
-        name: formData.name,
+      const { data, error } = await authClient.signUp.email({
         email: formData.email,
-        photoUrl: formData.photoUrl,
-        password: formData.password
+        password: formData.password,
+        name: formData.name,
+        image: formData.photoUrl,
       });
-      toast.success("Registered successfully! Please login.");
-      router.push("/login");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Registration failed");
+
+      if (error) {
+        toast.error(error.message || "Registration failed");
+      } else {
+        toast.success("Registration successful!");
+        router.push("/");
+        router.refresh();
+      }
+    } catch (err) {
+      toast.error("An unexpected error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg"
-      >
-        <div>
-          <div className="flex justify-center text-orange-500">
+      <Card className="max-w-md w-full p-6 shadow-xl rounded-2xl">
+        <CardHeader className="flex-col items-center gap-2 mb-4">
+          <div className="text-orange-500">
             <MdPets size={48} />
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Create an Account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Join us to adopt or list a pet
+          <p className="text-center text-sm text-gray-600">
+            Join us to find or list your furry friends
           </p>
-        </div>
-        <form className="mt-8 space-y-4" onSubmit={handleRegister}>
-          <div className="rounded-md shadow-sm space-y-4">
-            <input
-              name="name"
+        </CardHeader>
+
+        <CardBody>
+          <form className="flex flex-col gap-4" onSubmit={handleRegister}>
+            <Input
+              isRequired
+              label="Full Name"
               type="text"
-              required
-              className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-              placeholder="Full Name"
+              name="name"
+              variant="bordered"
               value={formData.name}
               onChange={handleChange}
             />
-            <input
-              name="email"
+            <Input
+              isRequired
+              label="Email"
               type="email"
-              required
-              className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
+              name="email"
+              variant="bordered"
               value={formData.email}
               onChange={handleChange}
             />
-            <input
+            <Input
+              label="Photo URL"
+              type="url"
               name="photoUrl"
-              type="text"
-              className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-              placeholder="Photo URL (Optional)"
+              variant="bordered"
+              placeholder="https://..."
               value={formData.photoUrl}
               onChange={handleChange}
             />
-            <input
-              name="password"
+            <Input
+              isRequired
+              label="Password"
               type="password"
-              required
-              className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
+              name="password"
+              variant="bordered"
               value={formData.password}
               onChange={handleChange}
             />
-            <input
-              name="confirmPassword"
-              type="password"
-              required
-              className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div>
-            <button
+            
+            <Button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors shadow-md"
+              color="warning"
+              variant="shadow"
+              isLoading={loading}
+              className="mt-4 text-white font-bold"
             >
               Register
-            </button>
-          </div>
-        </form>
+            </Button>
+          </form>
+        </CardBody>
         
-        <div className="text-center mt-4">
+        <CardFooter className="justify-center">
           <p className="text-sm text-gray-600">
             Already have an account?{' '}
             <Link href="/login" className="font-medium text-orange-500 hover:text-orange-400">
               Sign in
             </Link>
           </p>
-        </div>
-      </motion.div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
