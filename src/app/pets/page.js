@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -13,7 +13,7 @@ export default function AllPets() {
 
   const speciesOptions = ["Dog", "Cat", "Bird", "Rabbit", "Other"];
 
-  const fetchPets = async () => {
+  const fetchPets = useCallback(async () => {
     setLoading(true);
     try {
       let url = "/api/pets?";
@@ -27,7 +27,7 @@ export default function AllPets() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, selectedSpecies]);
 
   useEffect(() => {
     // Debounce search
@@ -35,7 +35,7 @@ export default function AllPets() {
       fetchPets();
     }, 500);
     return () => clearTimeout(timer);
-  }, [searchTerm, selectedSpecies]);
+  }, [fetchPets]);
 
   return (
     <div className="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -133,7 +133,7 @@ export default function AllPets() {
           <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
             <div className="text-6xl mb-4">😿</div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">No pets found</h3>
-            <p className="text-gray-500">We couldn't find any pets matching your criteria. Try adjusting your search or filters.</p>
+            <p className="text-gray-500">We couldn&apos;t find any pets matching your criteria. Try adjusting your search or filters.</p>
             <button 
               onClick={() => { setSearchTerm(""); setSelectedSpecies(""); }}
               className="mt-6 text-orange-500 hover:underline font-medium"

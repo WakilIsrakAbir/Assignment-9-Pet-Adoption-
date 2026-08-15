@@ -13,7 +13,7 @@ export default function Footer() {
               PetAdopt
             </Link>
             <p className="text-gray-400">
-              Connecting loving families with pets in need. Adopt, don't shop!
+              Connecting loving families with pets in need. Adopt, don&apos;t shop!
             </p>
           </div>
           <div>

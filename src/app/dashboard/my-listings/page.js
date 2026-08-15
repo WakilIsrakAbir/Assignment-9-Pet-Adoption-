@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -8,26 +8,30 @@ import { authClient } from "@/lib/auth-client";
 
 export default function MyListings() {
   const [pets, setPets] = useState([]);
+  const [allRequests, setAllRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [requestsModal, setRequestsModal] = useState({ open: false, petId: null, requests: [] });
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  const fetchMyPets = async () => {
+  const fetchMyPets = useCallback(async () => {
     try {
       const res = await axios.get("/api/pets");
       const myPets = res.data.filter(pet => pet.ownerEmail === user?.email);
       setPets(myPets);
+      
+      const reqRes = await axios.get("/api/requests/my-listings");
+      setAllRequests(reqRes.data);
     } catch (error) {
-      toast.error("Failed to load your listings");
+      toast.error("Failed to load your listings or requests");
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     if (user) fetchMyPets();
-  }, [user]);
+  }, [user, fetchMyPets]);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this pet listing?")) {
@@ -59,10 +63,11 @@ export default function MyListings() {
       // Close modal if approved, since we don't want them approving others
       if (status === 'approved') {
         setRequestsModal({ ...requestsModal, open: false });
-        fetchMyPets(); // Refresh to show adopted status
+        fetchMyPets(); // Refresh to show adopted status and update request counts
       } else {
         // Just refresh requests list
         const res = await axios.get("/api/requests/my-listings");
+        setAllRequests(res.data);
         const petRequests = res.data.filter(req => req.petId._id === requestsModal.petId);
         setRequestsModal({ ...requestsModal, requests: petRequests });
       }
@@ -135,12 +140,22 @@ export default function MyListings() {
                   </td>
                   <td className="p-4 font-bold text-gray-700">${pet.adoptionFee}</td>
                   <td className="p-4 text-right space-x-2">
-                    <button 
-                      onClick={() => openRequestsModal(pet._id)}
-                      className="bg-orange-100 text-orange-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-orange-200 transition cursor-pointer"
-                    >
-                      Requests
-                    </button>
+                    {(() => {
+                      const pendingCount = allRequests.filter(req => req.petId?._id === pet._id && req.status === 'pending').length;
+                      return (
+                        <button 
+                          onClick={() => openRequestsModal(pet._id)}
+                          className="bg-orange-100 text-orange-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-orange-200 transition cursor-pointer relative"
+                        >
+                          Requests
+                          {pendingCount > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
+                              {pendingCount}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })()}
                     <Link href={`/dashboard/update-pet/${pet._id}`} className="bg-green-100 text-green-600 px-3 py-1.5 rounded text-sm font-medium hover:bg-green-200 transition">
                       Edit
                     </Link>
@@ -181,7 +196,7 @@ export default function MyListings() {
                         <p className="font-bold text-gray-900">{req.requesterName}</p>
                         <p className="text-sm text-gray-500 mb-1">{req.requesterEmail}</p>
                         <p className="text-sm text-gray-600"><span className="font-semibold">Pickup:</span> {new Date(req.pickupDate).toLocaleDateString()}</p>
-                        {req.message && <p className="text-sm text-gray-600 mt-2 italic">"{req.message}"</p>}
+                        {req.message && <p className="text-sm text-gray-600 mt-2 italic">&quot;{req.message}&quot;</p>}
                       </div>
                       
                       <div className="flex flex-col items-end gap-2 shrink-0">

@@ -164,7 +164,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((story) => (
               <div key={story} className="bg-orange-50 p-6 rounded-2xl shadow-sm border border-orange-100 text-left">
-                <p className="italic text-gray-700 mb-4">"Adopting Bella was the best decision our family ever made. She brings so much joy and laughter into our home every single day!"</p>
+                <p className="italic text-gray-700 mb-4">&quot;Adopting Bella was the best decision our family ever made. She brings so much joy and laughter into our home every single day!&quot;</p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-orange-200"></div>
                   <div>
@@ -223,7 +223,7 @@ export default function Home() {
       {/* Volunteer Section (Custom 2) */}
       <section className="py-20 bg-orange-500 text-white text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Want to Help But Can't Adopt?</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Want to Help But Can&apos;t Adopt?</h2>
           <p className="text-lg md:text-xl text-orange-50 mb-8">Join our volunteer program and make a direct impact on the lives of rescue animals. We are always looking for passionate animal lovers to help out at our shelters.</p>
           <button className="bg-white text-orange-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-lg transition-colors text-lg">
             Become a Volunteer

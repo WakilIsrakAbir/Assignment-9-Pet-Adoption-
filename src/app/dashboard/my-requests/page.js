@@ -21,6 +21,7 @@ export default function MyRequests() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchMyRequests();
   }, []);
 
@@ -36,7 +37,7 @@ export default function MyRequests() {
       
       {requests.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-          <p className="text-gray-500 mb-4">You haven't requested to adopt any pets yet.</p>
+          <p className="text-gray-500 mb-4">You haven&apos;t requested to adopt any pets yet.</p>
           <Link href="/pets" className="text-orange-500 font-medium hover:underline border-2 border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white transition">
             Browse Pets
           </Link>

@@ -104,7 +104,7 @@ export default function Login() {
         
         <CardFooter className="justify-center">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className="font-medium text-orange-500 hover:text-orange-400">
               Sign up
             </Link>
