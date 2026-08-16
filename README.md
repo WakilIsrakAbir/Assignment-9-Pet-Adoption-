@@ -4,8 +4,8 @@
 PetAdopt is a full-stack web application designed to connect loving individuals with adorable pets in need of a forever home. Users can browse available pets, filter them by species, view detailed information, and submit adoption requests. Pet owners can list their pets for adoption, manage incoming requests, and update or delete their listings.
 
 ## 🔗 Live URL
-*(Add your Vercel/Netlify live URL here after deployment)*
-`https://your-live-url.vercel.app`
+*(live URL here)*
+`assignment-9-pet-adoption.vercel.app`
 
 ## ✨ Key Features
 1. **User Authentication & Authorization**: Secure login and registration using Better-Auth. Users must be logged in to adopt pets or manage their dashboard.
