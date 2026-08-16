@@ -56,7 +56,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              src="/hero.webp" 
               alt="Happy dog" 
               className="rounded-2xl shadow-2xl"
             />
@@ -162,14 +162,35 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Happy Tails: Success Stories</h2>
           <p className="text-gray-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto">See how adoption has transformed the lives of pets and their new families.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((story) => (
-              <div key={story} className="bg-orange-50 dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-800 text-left transition-colors">
-                <p className="italic text-gray-700 dark:text-slate-300 mb-4">&quot;Adopting Bella was the best decision our family ever made. She brings so much joy and laughter into our home every single day!&quot;</p>
+            {[
+              {
+                id: 1,
+                quote: "Adopting Bella was the best decision our family ever made. She brings so much joy and laughter into our home every single day!",
+                family: "The Smith Family",
+                pet: "Adopted Bella (Dog)"
+              },
+              {
+                id: 2,
+                quote: "We were looking for a companion and found Whiskers. He is such a sweet cat and has completely stolen our hearts. Thank you!",
+                family: "The Johnson Family",
+                pet: "Adopted Whiskers (Cat)"
+              },
+              {
+                id: 3,
+                quote: "Max has been a wonderful addition to our lives. The adoption process was so smooth and we couldn't be happier with our new best friend.",
+                family: "The Williams Family",
+                pet: "Adopted Max (Dog)"
+              }
+            ].map((story) => (
+              <div key={story.id} className="bg-orange-50 dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-800 text-left transition-colors">
+                <p className="italic text-gray-700 dark:text-slate-300 mb-4">&quot;{story.quote}&quot;</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-orange-200 dark:bg-orange-900/50"></div>
+                  <div className="w-12 h-12 rounded-full bg-orange-200 dark:bg-orange-900/50 flex items-center justify-center text-xl">
+                    {story.family.charAt(4)}
+                  </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white">The Smith Family</h4>
-                    <p className="text-sm text-gray-500 dark:text-slate-400">Adopted Bella (Dog)</p>
+                    <h4 className="font-bold text-gray-900 dark:text-white">{story.family}</h4>
+                    <p className="text-sm text-gray-500 dark:text-slate-400">{story.pet}</p>
                   </div>
                 </div>
               </div>
@@ -225,9 +246,6 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Want to Help But Can&apos;t Adopt?</h2>
           <p className="text-lg md:text-xl text-orange-50 mb-8">Join our volunteer program and make a direct impact on the lives of rescue animals. We are always looking for passionate animal lovers to help out at our shelters.</p>
-          <button className="bg-white text-orange-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-lg transition-colors text-lg">
-            Become a Volunteer
-          </button>
         </div>
       </section>
     </div>

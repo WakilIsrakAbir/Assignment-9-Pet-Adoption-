@@ -74,6 +74,7 @@ export default function DashboardLayout({ children }) {
             <img 
               src={user.image || "https://via.placeholder.com/150"} 
               alt={user.name}
+              referrerPolicy="no-referrer"
               className="w-14 h-14 rounded-full border-2 border-orange-500 object-cover shadow-sm shrink-0"
             />
             <div className="flex-1 overflow-hidden min-w-0">

@@ -59,11 +59,12 @@ export default function Navbar() {
                 <div className="relative">
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center focus:outline-none transition-transform hover:scale-105"
+                    className="flex items-center focus:outline-none transition-transform hover:scale-105 cursor-pointer"
                   >
                     <img 
                       src={user.image || "https://via.placeholder.com/150"} 
                       alt={user.name}
+                      referrerPolicy="no-referrer"
                       className="w-9 h-9 rounded-full border-2 border-orange-500 object-cover shadow-sm"
                     />
                   </button>
@@ -110,11 +111,11 @@ export default function Navbar() {
                   )}
                 </div>
               ) : (
-                <div className="flex items-center gap-3">
-                  <Link href="/login" className="px-4 py-2 font-bold text-orange-500 bg-orange-50 dark:bg-orange-500/10 hover:bg-orange-100 dark:hover:bg-orange-500/20 rounded-lg transition-colors">
+                <div className="flex items-center gap-2">
+                  <Link href="/login" className={`px-4 py-2 font-bold rounded-lg transition-colors ${isActive("/login") ? "bg-orange-500 text-white" : "text-orange-500 hover:bg-orange-500 hover:text-white"}`}>
                     Log in
                   </Link>
-                  <Link href="/register" className="px-4 py-2 font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-lg shadow-sm transition-colors">
+                  <Link href="/register" className={`px-4 py-2 font-bold rounded-lg transition-colors ${isActive("/register") ? "bg-orange-500 text-white" : "text-orange-500 hover:bg-orange-500 hover:text-white"}`}>
                     Sign up
                   </Link>
                 </div>
@@ -147,8 +148,8 @@ export default function Navbar() {
             </>
           ) : (
             <div className="pt-2 flex flex-col gap-2">
-              <Link href="/login" className="w-full text-center px-4 py-2 font-bold text-orange-500 bg-orange-50 dark:bg-orange-500/10 hover:bg-orange-100 dark:hover:bg-orange-500/20 rounded-lg transition-colors">Log in</Link>
-              <Link href="/register" className="w-full text-center px-4 py-2 font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-lg shadow-sm transition-colors">Sign up</Link>
+              <Link href="/login" className={`w-full text-center px-4 py-2 font-bold rounded-lg transition-colors ${isActive("/login") ? "bg-orange-500 text-white" : "text-orange-500 hover:bg-orange-500 hover:text-white"}`}>Log in</Link>
+              <Link href="/register" className={`w-full text-center px-4 py-2 font-bold rounded-lg transition-colors ${isActive("/register") ? "bg-orange-500 text-white" : "text-orange-500 hover:bg-orange-500 hover:text-white"}`}>Sign up</Link>
             </div>
           )}
         </div>
