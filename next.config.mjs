@@ -6,7 +6,9 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: process.env.NODE_ENV === "development" ? 'http://localhost:5000/api/:path*' : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/:path*`,
+        destination: process.env.NODE_ENV === "production" 
+          ? "https://assignment-9-pet-adoption-backend.vercel.app/api/:path*"
+          : "http://localhost:5000/api/:path*"
       },
     ];
   },
