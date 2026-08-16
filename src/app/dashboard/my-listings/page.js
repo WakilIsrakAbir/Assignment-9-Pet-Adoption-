@@ -30,6 +30,7 @@ export default function MyListings() {
   }, [user]);
 
   useEffect(() => {
+    // eslint-disable-next-line
     if (user) fetchMyPets();
   }, [user, fetchMyPets]);
 
@@ -107,7 +108,7 @@ export default function MyListings() {
 
       {pets.length === 0 ? (
         <div className="text-center py-10 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-          <p className="text-gray-500 mb-4">You haven't added any pets yet.</p>
+          <p className="text-gray-500 mb-4">You have not added any pets yet.</p>
           <Link href="/dashboard/add-pet" className="text-orange-500 font-medium hover:underline">Add your first pet listing</Link>
         </div>
       ) : (

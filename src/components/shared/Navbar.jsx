@@ -6,7 +6,6 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { MdPets, MdMenu, MdClose, MdLogout, MdDashboard } from "react-icons/md";
 import { Button, Avatar } from "@heroui/react";
-import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function Navbar() {
   const { data: session, isPending } = authClient.useSession();
@@ -27,8 +26,9 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
+        <div className="flex justify-between items-center h-16">
+          {/* Left: Logo */}
+          <div className="flex items-center shrink-0">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="bg-orange-100 p-2 rounded-lg group-hover:bg-orange-500 transition-colors">
                 <MdPets className="text-orange-500 group-hover:text-white transition-colors" size={24} />
@@ -37,17 +37,21 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-4 md:gap-6">
-            <div className="hidden md:flex items-center gap-6">
-              <Link href="/" className={`font-medium transition-colors ${isActive("/") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>Home</Link>
-              <Link href="/pets" className={`font-medium transition-colors ${isActive("/pets") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>All Pets</Link>
-              {user && (
-                <>
-                  <Link href="/dashboard/my-requests" className={`font-medium transition-colors ${isActive("/dashboard/my-requests") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>My Requests</Link>
-                  <Link href="/dashboard/add-pet" className={`font-medium transition-colors ${isActive("/dashboard/add-pet") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>Add Pet</Link>
-                </>
-              )}
-              
+          {/* Center: Nav Links */}
+          <div className="hidden md:flex flex-1 justify-center items-center gap-8">
+            <Link href="/" className={`font-medium transition-colors ${isActive("/") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>Home</Link>
+            <Link href="/pets" className={`font-medium transition-colors ${isActive("/pets") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>All Pets</Link>
+            {user && (
+              <>
+                <Link href="/dashboard/my-requests" className={`font-medium transition-colors ${isActive("/dashboard/my-requests") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>My Requests</Link>
+                <Link href="/dashboard/add-pet" className={`font-medium transition-colors ${isActive("/dashboard/add-pet") ? "text-orange-500" : "text-gray-600 hover:text-orange-500"}`}>Add Pet</Link>
+              </>
+            )}
+          </div>
+
+          {/* Right: Auth & Profile */}
+          <div className="flex items-center gap-4 shrink-0">
+            <div className="hidden md:flex items-center">
               {isPending ? (
                 <div className="animate-pulse w-10 h-10 bg-gray-200 rounded-full"></div>
               ) : user ? (
@@ -115,9 +119,6 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-
-            {/* Theme Switcher */}
-            <ThemeSwitcher />
 
             {/* Mobile menu button */}
             <div className="md:hidden flex items-center">

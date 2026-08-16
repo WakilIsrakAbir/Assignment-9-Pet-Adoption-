@@ -28,6 +28,16 @@ export default function Register() {
       return;
     }
 
+    if (!/[A-Z]/.test(formData.password)) {
+      toast.error("Password must contain at least one uppercase letter.");
+      return;
+    }
+
+    if (!/[a-z]/.test(formData.password)) {
+      toast.error("Password must contain at least one lowercase letter.");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match!");
       return;
