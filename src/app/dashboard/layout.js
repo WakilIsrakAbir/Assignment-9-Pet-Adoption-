@@ -69,8 +69,8 @@ export default function DashboardLayout({ children }) {
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ${showSidebar ? "flex flex-col md:flex-row gap-8" : ""}`}>
       {showSidebar && (
         <aside className="w-full md:w-64 shrink-0">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:sticky top-24">
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 md:sticky top-24 transition-colors duration-300">
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100 dark:border-slate-800">
             <img 
               src={user.image || "https://via.placeholder.com/150"} 
               alt={user.name}
@@ -78,12 +78,12 @@ export default function DashboardLayout({ children }) {
             />
             <div className="flex-1 overflow-hidden min-w-0">
               <div className="flex justify-between items-center gap-2">
-                <p className="font-bold text-gray-900 truncate">{user.name}</p>
-                <button onClick={openEditModal} className="text-gray-400 hover:text-orange-500 transition-colors shrink-0" title="Edit Profile">
+                <p className="font-bold text-gray-900 dark:text-white truncate">{user.name}</p>
+                <button onClick={openEditModal} className="text-gray-400 dark:text-slate-500 hover:text-orange-500 transition-colors shrink-0" title="Edit Profile">
                   <MdEdit size={18} />
                 </button>
               </div>
-              <p className="text-xs text-gray-500 truncate">{user.email}</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 truncate">{user.email}</p>
             </div>
           </div>
           <nav className="space-y-2">
@@ -94,7 +94,7 @@ export default function DashboardLayout({ children }) {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${isActive ? 'bg-orange-500 text-white shadow-md' : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'}`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${isActive ? 'bg-orange-500 text-white shadow-md' : 'text-gray-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-orange-600 dark:hover:text-orange-500'}`}
                 >
                   <Icon size={20} />
                   {item.name}
@@ -106,7 +106,7 @@ export default function DashboardLayout({ children }) {
       </aside>
       )}
       <main className={showSidebar ? "flex-1" : "max-w-5xl mx-auto w-full"}>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 min-h-[500px]">
+        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 md:p-8 min-h-[500px] transition-colors duration-300">
           {children}
         </div>
       </main>
@@ -114,34 +114,34 @@ export default function DashboardLayout({ children }) {
       {/* Edit Profile Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 w-full max-w-md shadow-2xl relative border border-gray-100 dark:border-slate-800">
             <div className="flex justify-between items-center mb-5">
-              <h3 className="text-xl font-bold text-gray-900">Edit Profile</h3>
-              <button onClick={() => setIsEditModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Edit Profile</h3>
+              <button onClick={() => setIsEditModalOpen(false)} className="text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors">
                 <MdClose size={24} />
               </button>
             </div>
             
             <form onSubmit={handleUpdateProfile} className="flex flex-col gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-gray-700">Full Name <span className="text-red-500">*</span></label>
+                <label className="text-sm font-medium text-gray-700 dark:text-slate-300">Full Name <span className="text-red-500">*</span></label>
                 <input
                   required
                   type="text"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-gray-700">Profile Image URL</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-slate-300">Profile Image URL</label>
                 <input
                   type="url"
                   value={editImage}
                   onChange={(e) => setEditImage(e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               
