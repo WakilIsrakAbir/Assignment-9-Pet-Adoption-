@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-// Configure axios default
+
 axios.defaults.withCredentials = true;
 
 const AuthContext = createContext();
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check auth state on load
+
   useEffect(() => {
     const fetchUser = async () => {
       try {

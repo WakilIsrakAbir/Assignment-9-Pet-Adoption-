@@ -30,7 +30,7 @@ export default function MyListings() {
   }, [user]);
 
   useEffect(() => {
-    // eslint-disable-next-line
+
     if (user) fetchMyPets();
   }, [user, fetchMyPets]);
 
@@ -61,12 +61,12 @@ export default function MyListings() {
       await axios.put(`/api/requests/${requestId}/status`, { status });
       toast.success(`Request ${status} successfully`);
       
-      // Close modal if approved, since we don't want them approving others
+
       if (status === 'approved') {
         setRequestsModal({ ...requestsModal, open: false });
-        fetchMyPets(); // Refresh to show adopted status and update request counts
+        fetchMyPets();
       } else {
-        // Just refresh requests list
+
         const res = await axios.get("/api/requests/my-listings");
         setAllRequests(res.data);
         const petRequests = res.data.filter(req => req.petId._id === requestsModal.petId);
@@ -175,7 +175,7 @@ export default function MyListings() {
         </div>
       )}
 
-      {/* Requests Modal */}
+
       {requestsModal.open && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden max-h-[80vh] flex flex-col border border-transparent dark:border-slate-800">
